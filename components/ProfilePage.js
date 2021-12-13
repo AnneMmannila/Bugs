@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Alert, ActivityIndicator  } from "react-native";
+import { Text, View, Alert } from "react-native";
 import {
   getAuth,
   onAuthStateChanged,
   deleteUser,
   reauthenticateWithCredential,
   updateProfile,
-  updateEmail,
+  updateEmail
 } from "firebase/auth";
 import { MyAppText } from "./Styles.js";
 import { Input, Button } from "react-native-elements";
@@ -28,7 +28,6 @@ export default function ProfilePage() {
         setEmail(user.email);
         setUserName(user.displayName);
       } else {
-        console.log("no user found O_o");
         store.dispatch(logIn(false));
       }
     });
@@ -40,10 +39,12 @@ export default function ProfilePage() {
     store.dispatch(logIn(false));
   };
 
+  //not used
   const reAutheticate = () => {
     const auth = getAuth();
     const user = auth.currentUser;
     const credential = promptForCredentials();
+    console.log(credential+"hello")
     reauthenticateWithCredential(user, credential)
       .then(() => {
         console.log("user re-autheticated");
@@ -83,7 +84,6 @@ export default function ProfilePage() {
     e.preventDefault();
     const auth = getAuth();
     const user = auth.currentUser;
-    reAutheticate();
     deleteUser(user)
       .then(() => {
         alert("User deleted");

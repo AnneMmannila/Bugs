@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from "react";
-import { Text, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 import { Input, Button } from "react-native-elements";
 import { MyAppText, stylesLogin } from "./Styles";
 import {
@@ -19,12 +19,13 @@ export default function Login({ navigation }) {
       if (user) {
         store.dispatch(logIn(true));
       } else {
-        alert("Wrong email or password or you are not signed in.");
+        console.log('')
       }
     });
   };
 
-  const handleLogin = () => {
+  const handleLogin = (e) => {
+    e.preventDefault();
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -34,6 +35,7 @@ export default function Login({ navigation }) {
       })
       .catch((error) => {
         console.log(error.message);
+        Alert.alert('no user found')
       });
   };
 
@@ -62,7 +64,7 @@ export default function Login({ navigation }) {
         <Button
           title="Login"
           buttonStyle={stylesLogin.buttonstyle}
-          onPress={handleLogin}
+          onPress={(e)=>handleLogin(e)}
         ></Button>
         <Button
           title="Sign Up"

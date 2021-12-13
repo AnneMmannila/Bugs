@@ -27,7 +27,7 @@ export default function Favorites() {
         emailFixed= emailFixed.replace('.','');
         setUser(emailFixed);
       } else {
-        console.log("no user found O_o");
+        console.log("");
       }
     });
   }, []);

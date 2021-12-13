@@ -38,10 +38,6 @@ export default function SignUp({ navigation }) {
           onChangeText={(password) => setPassword(password)}
           secureTextEntry={true}
         ></Input>
-        <Input
-          placeholder="confirm password"
-          inputContainerStyle={stylesSignUp.input}
-        ></Input>
       </View>
       <View style={stylesSignUp.buttonview}>
         <Button

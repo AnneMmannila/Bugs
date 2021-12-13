@@ -17,7 +17,6 @@ import { getDatabase, ref, push } from "firebase/database";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { LinearGradient } from "expo-linear-gradient";
 
-
 const firebaseConfig = {
   apiKey: "AIzaSyBiCAGNdVptN4YYvCwCVqcYk1f3dMnO6Po",
   authDomain: "bugs-5e77f.firebaseapp.com",
@@ -44,8 +43,9 @@ export default function FindBugs() {
       let name = searchname.replace(" ", "+");
       name = name.toLowerCase();
       let response = await fetch(
-        "https://api.gbif.org/v1/species?name=" + searchname
-      , {signal: controller.signal});
+        "https://api.gbif.org/v1/species?name=" + searchname,
+        { signal: controller.signal }
+      );
       let responseToJson = await response.json();
       if (responseToJson.results.length > 0) {
         setSpecies(responseToJson.results);
@@ -62,7 +62,9 @@ export default function FindBugs() {
     try {
       let taxonkey = key;
       let response = await fetch(
-        "https://api.gbif.org/v1/species/" + taxonkey + "/media", {signal: controller.signal});
+        "https://api.gbif.org/v1/species/" + taxonkey + "/media",
+        { signal: controller.signal }
+      );
       let responseToJson = await response.json();
       if (responseToJson.results.length === 0) {
         let listWithImages = species.map((s) => ({
@@ -168,57 +170,50 @@ export default function FindBugs() {
   );
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: "#ffffff",
-        paddingTop: StatusBar.currentHeight,
-        marginHorizontal: 10,
-      }}
-    >
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View
+    <View style={{flex:1}}>
+      {listOfSpecies.length === 0 ? (
+        <SafeAreaView
           style={{
-            flex: 2,
-            justifyContent: "flex-start",
-            width: "100%",
-            height: 220,
-            marginTop: 0,
+            flex: 1,
+            backgroundColor: "#ffffff",
+            paddingTop: StatusBar.currentHeight,
+            marginHorizontal: 10,
           }}
         >
-          <Image
-            source={require("../assets/bugs-5173097_1280.jpg")}
-            style={{ width: "100%", height: 300, resizeMode: "contain" }}
-          >
-            <LinearGradient
-              colors={["transparent", "#ffffff"]}
-              style={{ flex: 1, width: "100%" }}
-              start={{ x: 1, y: 0.3 }}
-              end={{ x: 1, y: 0.65 }}
-            ></LinearGradient>
-          </Image>
-        </View>
-        <View style={stylesFindBugs.textview}>
-          <MyAppBodyText props="Find and save your favorite bugs or species. (Eg. scarabaeidae, Cetonia aurata)"></MyAppBodyText>
-        </View>
-        <View style={{ flex: 3, justifyContent: "flex-start" }}>
-          <Input
-            placeholder="search"
-            leftIcon={{ name: "search", color: "gray", size: 30 }}
-            inputContainerStyle={stylesFindBugs.inputcontainer}
-            value={searchname}
-            onChangeText={(searchname) => setSearchName(searchname)}
-          ></Input>
-
-          {listOfSpecies.length > 0 ? (
-            <View style={stylesFindBugs.viewbtn}>
-              <Button
-                title="clear"
-                onPress={clear}
-                buttonStyle={stylesFindBugs.btnClear}
-              ></Button>
+            <View
+              style={{
+                justifyContent: "flex-start",
+                width: "100%",
+                height: 220,
+                marginTop: 0,
+              }}
+            >
+              <Image
+                source={require("../assets/bugs-5173097_1280.jpg")}
+                style={{ width: "100%", height: 300, resizeMode: "contain" }}
+              >
+                <LinearGradient
+                  colors={["transparent", "#ffffff"]}
+                  style={{ flex: 1, width: "100%" }}
+                  start={{ x: 1, y: 0.3 }}
+                  end={{ x: 1, y: 0.65 }}
+                ></LinearGradient>
+              </Image>
             </View>
-          ) : (
+            <View style={{flex: 1}}>
+            <View style={stylesFindBugs.textview}>
+              <MyAppBodyText props="Find and save your favorite bugs or species. (Eg. scarabaeidae, Cetonia aurata)"></MyAppBodyText>
+            </View>
+            <View style={{ flex:1, justifyContent: "flex-start" }}>
+              <Input
+                placeholder="search"
+                leftIcon={{ name: "search", color: "gray", size: 30 }}
+                inputContainerStyle={stylesFindBugs.inputcontainer}
+                value={searchname}
+                onChangeText={(searchname) => setSearchName(searchname)}
+              ></Input>
+            </View>
+
             <View style={stylesFindBugs.viewbtn}>
               <Button
                 title="search"
@@ -226,14 +221,52 @@ export default function FindBugs() {
                 buttonStyle={stylesFindBugs.btnGetSpecies}
               ></Button>
             </View>
-          )}
-        </View>
-      </ScrollView>
-      <FlatList
-        data={listOfSpecies}
-        renderItem={renderList}
-        keyExtractor={(item, index) => index.toString()}
-      ></FlatList>
-    </SafeAreaView>
+            </View>
+         
+            <FlatList
+              data={listOfSpecies}
+              renderItem={renderList}
+              keyExtractor={(item, index) => index.toString()}
+            ></FlatList>
+          
+        </SafeAreaView>
+      ) : (
+        <SafeAreaView
+          style={{
+            flex: 1,
+            backgroundColor: "#ffffff",
+            paddingTop: StatusBar.currentHeight,
+            marginHorizontal: 10,
+          }}
+        >
+          <View style={{flex:1}}>
+          <View style={{ flex: 3, justifyContent: "center" }}>
+            <Input
+              placeholder="search"
+              leftIcon={{ name: "search", color: "gray", size: 30 }}
+              inputContainerStyle={stylesFindBugs.inputcontainer}
+              value={searchname}
+              onChangeText={(searchname) => setSearchName(searchname)}
+            ></Input>
+
+            <View style={stylesFindBugs.viewbtn}>
+              <Button
+                title="clear"
+                onPress={clear}
+                buttonStyle={stylesFindBugs.btnClear}
+              ></Button>
+            </View>
+          </View>
+          </View>
+          <View style={{flex:2}}>
+          <FlatList
+            data={listOfSpecies}
+            renderItem={renderList}
+            keyExtractor={(item, index) => index.toString()}
+          ></FlatList>
+          </View>
+        </SafeAreaView>
+      )}
+    </View>
   );
 }
