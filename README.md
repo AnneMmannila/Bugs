@@ -1,15 +1,16 @@
 # Bugs
-React Native and Expo app
+React Native and Expo app.
+This project was created during Haaga-Helia's Mobile Programming -course in fall 2021. The project idea is to increase people's awareness of biodiversity and its threaths. With the app you can find and save your favorite bugs or species. User can also sign up and log in to save user specific favorites. The app uses https://www.gbif.org/ API.
 
 ## Built with
 - [Expo](https://expo.dev/)
 - [React Native](https://reactnative.dev/)
+- [Firebase](https://firebase.google.com/)
 
-## Use libraries
+## Libraries
 - react-navigation
 - expo-google-fonts
 - expo-linear-gradient
-- firebase
 - react-native-elements
 - react-native-vector-icons
 - react-native-youtube-iframe
