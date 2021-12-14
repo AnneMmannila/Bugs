@@ -23,4 +23,4 @@ React Native and Expo app
 ![bugs_find](https://user-images.githubusercontent.com/70891200/146007908-ac4cea2b-5701-4a23-abf1-da20a84a1f25.jpeg)
 ![bugs_find_list](https://user-images.githubusercontent.com/70891200/146008005-10190fe6-5abb-4870-aa00-135b0fc9cde7.jpeg)
 ![bugs_map](https://user-images.githubusercontent.com/70891200/146008075-ac21220d-1ddb-42c4-b705-bdbfa7a1fda4.jpeg)
-![bugs_profile](https://user-images.githubusercontent.com/70891200/146008138-7eff27cd-86c1-413a-936f-eb5061d924d5.jpeg)
+
