@@ -3,7 +3,6 @@ import AppLoading from "expo-app-loading";
 import { Text, View, StyleSheet, StatusBar } from "react-native";
 import { useFonts, Bungee_400Regular } from "@expo-google-fonts/bungee";
 
-
 export function MyAppText({ props }) {
   let [fontsLoaded] = useFonts({
     Bungee_400Regular,
@@ -51,7 +50,6 @@ const styles = StyleSheet.create({
   },
 });
 
-
 export const stylesBugMap = StyleSheet.create({
   container: {
     flex: 1,
@@ -65,14 +63,13 @@ export const stylesBugMap = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     marginBottom: 200,
-    
   },
   mapStyle: { width: 200, height: 200 },
-  scrollview: { backgroundColor: '#ffffff'},
+  scrollview: { backgroundColor: "#ffffff" },
   imagestyle: { width: 250, height: 300 },
   viewStyleTextYoutube: { flex: 1, width: 300, height: 200 },
   textheigth: { height: 200 },
-  textstyle: { fontSize: 18, textAlign: "center", paddingTop: 10 }
+  textstyle: { fontSize: 18, textAlign: "center", paddingTop: 10 },
 });
 
 export const stylesFavorites = StyleSheet.create({
@@ -90,19 +87,22 @@ export const stylesFavorites = StyleSheet.create({
 });
 
 export const stylesFindBugs = StyleSheet.create({
-
   btnGetSpecies: { backgroundColor: "black", width: 100, height: 50 },
-  btnClear: { backgroundColor: "black", width: 100, height: 50, marginBottom:10 },
-  viewbtn: {flex:0.5, justifyContent:'flex-start', alignItems: "center",},
+  btnClear: {
+    backgroundColor: "black",
+    width: 100,
+    height: 50,
+    marginBottom: 10,
+  },
+  viewbtn: { flex: 0.5, justifyContent: "flex-start", alignItems: "center" },
   inputcontainer: {
     borderColor: "black",
     borderWidth: 2,
     borderRadius: 20,
-    borderBottomWidth: 2
+    borderBottomWidth: 2,
   },
-  textview: {flex:0.5, justifyContent: "flex-start" },
-  fullview: {flex:1, marginHorizontal: 10, backgroundColor: "#ffffff" },
-
+  textview: { flex: 0.5, justifyContent: "flex-start" },
+  fullview: { flex: 1, marginHorizontal: 10, backgroundColor: "#ffffff" },
 });
 
 export const stylesFrontPage = StyleSheet.create({
@@ -133,11 +133,10 @@ export const stylesFrontPage = StyleSheet.create({
     paddingTop: 10,
   },
   bugsimage: { flex: 1, aspectRatio: 0.5, resizeMode: "contain" },
-  biodivText: { fontSize: 20, color: "green" }
+  biodivText: { fontSize: 20, color: "green" },
 });
 
-
-export const stylesLogin= StyleSheet.create({
+export const stylesLogin = StyleSheet.create({
   input: {
     borderColor: "#3CB371",
     borderWidth: 2,
@@ -157,12 +156,11 @@ export const stylesLogin= StyleSheet.create({
   buttonstyleSignUp: { width: 150, backgroundColor: "#8FBC8F" },
 });
 
-
 export const stylesProfilePage = StyleSheet.create({
   container: { flex: 1 },
-  btnremove: { backgroundColor: "red",  width:150 },
-  btnupdate: { backgroundColor: "#3CB371", width: 150, alignSelf:'center' },
-  btnView: { flex: 1, flexDirection:'row', justifyContent: 'space-evenly'},
+  btnremove: { backgroundColor: "red", width: 150 },
+  btnupdate: { backgroundColor: "#3CB371", width: 150, alignSelf: "center" },
+  btnView: { flex: 1, flexDirection: "row", justifyContent: "space-evenly" },
   input: {
     borderColor: "black",
     borderWidth: 2,
@@ -180,7 +178,6 @@ export const stylesProfilePage = StyleSheet.create({
   },
   buttonplacement: { alignSelf: "center", padding: 50 },
 });
-
 
 export const stylesSignUp = StyleSheet.create({
   input: {

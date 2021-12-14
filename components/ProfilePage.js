@@ -8,7 +8,7 @@ import {
   updateProfile,
   updateEmail,
   signOut,
-  EmailAuthProvider
+  EmailAuthProvider,
 } from "firebase/auth";
 import { MyAppText } from "./Styles.js";
 import { Input, Button, Overlay } from "react-native-elements";
@@ -26,16 +26,15 @@ export default function ProfilePage() {
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
-      try{
-      if (user) {
-        setActiveUser(user);
-        setEmail(user.email);
-        setUserName(user.displayName);
-      } else {
-        store.dispatch(logIn(false));
-      } 
-    }catch(error){   
-    }
+      try {
+        if (user) {
+          setActiveUser(user);
+          setEmail(user.email);
+          setUserName(user.displayName);
+        } else {
+          store.dispatch(logIn(false));
+        }
+      } catch (error) {}
     });
   }, []);
 
@@ -55,7 +54,7 @@ export default function ProfilePage() {
 
   const reAutheticate = () => {
     const auth = getAuth();
-    const user= auth.currentUser;
+    const user = auth.currentUser;
     const credential = EmailAuthProvider.credential(email, password);
     reauthenticateWithCredential(user, credential)
       .then(() => {
@@ -109,7 +108,6 @@ export default function ProfilePage() {
     setVisible(!visible);
   };
 
-
   return (
     <View style={stylesProfilePage.container}>
       <View style={{ padding: 10 }}>
@@ -158,12 +156,14 @@ export default function ProfilePage() {
                 label="password"
                 inputContainerStyle={stylesProfilePage.input}
                 value={password}
-                secureTextEntry = {true}
+                secureTextEntry={true}
                 onChangeText={(password) => setPassword(password)}
               ></Input>
               <View style={stylesProfilePage.btnView}>
-              <Button title='Delete' onPress={reAutheticate}> </Button>
-              <Button title='Cancel' onPress={toggleOverlay}> </Button>
+                <Button title="Delete" onPress={reAutheticate}>
+                </Button>
+                <Button title="Cancel" onPress={toggleOverlay}>
+                </Button>
               </View>
             </Overlay>
           </View>

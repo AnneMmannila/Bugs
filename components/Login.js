@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Text, View } from "react-native";
 import { Input, Button } from "react-native-elements";
 import { MyAppText, stylesLogin } from "./Styles";
@@ -14,18 +14,16 @@ export default function Login({ navigation }) {
   const [password, setPassword] = useState("");
 
   const changeViewIfAutheticated = () => {
-    try{
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        store.dispatch(logIn(true));
-      } else {
-        console.log('')
-      }
-    });
-  }catch(error){
-  
-    }
+    try {
+      const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          store.dispatch(logIn(true));
+        } else {
+          console.log("");
+        }
+      });
+    } catch (error) {}
   };
 
   const handleLogin = (e) => {
@@ -35,13 +33,13 @@ export default function Login({ navigation }) {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log("Logged in with: ", user.email);
-        setEmail('');
-        setPassword('');
+        setEmail("");
+        setPassword("");
         changeViewIfAutheticated();
       })
       .catch((error) => {
         console.log(error.message);
-        Alert.alert('no user found')
+        Alert.alert("no user found");
       });
   };
 
@@ -56,21 +54,21 @@ export default function Login({ navigation }) {
           inputContainerStyle={stylesLogin.input}
           value={email}
           onChangeText={(email) => setEmail(email)}
-          keyboardType = 'email-address'
+          keyboardType="email-address"
         ></Input>
         <Input
           placeholder="password"
           inputContainerStyle={stylesLogin.input}
           value={password}
           onChangeText={(password) => setPassword(password)}
-          secureTextEntry = {true}
+          secureTextEntry={true}
         ></Input>
       </View>
       <View style={stylesLogin.buttonview}>
         <Button
           title="Login"
           buttonStyle={stylesLogin.buttonstyle}
-          onPress={(e)=>handleLogin(e)}
+          onPress={(e) => handleLogin(e)}
         ></Button>
         <Button
           title="Sign Up"
@@ -81,4 +79,3 @@ export default function Login({ navigation }) {
     </View>
   );
 }
-

@@ -89,17 +89,17 @@ export default function FindBugs() {
   };
 
   useEffect(() => {
-    try{
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const uid = user.uid;
-        setUser(user);
-      } else {
-        console.log("");
-      }
-    })
-  }catch(error) {}
+    try {
+      const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const uid = user.uid;
+          setUser(user);
+        } else {
+          console.log("");
+        }
+      });
+    } catch (error) {}
   }, []);
 
   const clear = () => {
@@ -125,7 +125,7 @@ export default function FindBugs() {
       const idetifyOwnObjects = modyfyEmailForDatabase();
       push(ref(db, `favorites/${idetifyOwnObjects}`), {
         item,
-      })
+      });
     }
     console.log("added");
     controller.abort();
@@ -174,7 +174,7 @@ export default function FindBugs() {
   );
 
   return (
-    <View style={{flex:1}}>
+    <View style={{ flex: 1 }}>
       {listOfSpecies.length === 0 ? (
         <SafeAreaView
           style={{
@@ -184,31 +184,31 @@ export default function FindBugs() {
             marginHorizontal: 10,
           }}
         >
-            <View
-              style={{
-                justifyContent: "flex-start",
-                width: "100%",
-                height: 220,
-                marginTop: 0,
-              }}
+          <View
+            style={{
+              justifyContent: "flex-start",
+              width: "100%",
+              height: 220,
+              marginTop: 0,
+            }}
+          >
+            <Image
+              source={require("../assets/bugs-5173097_1280.jpg")}
+              style={{ width: "100%", height: 300, resizeMode: "contain" }}
             >
-              <Image
-                source={require("../assets/bugs-5173097_1280.jpg")}
-                style={{ width: "100%", height: 300, resizeMode: "contain" }}
-              >
-                <LinearGradient
-                  colors={["transparent", "#ffffff"]}
-                  style={{ flex: 1, width: "100%" }}
-                  start={{ x: 1, y: 0.3 }}
-                  end={{ x: 1, y: 0.65 }}
-                ></LinearGradient>
-              </Image>
-            </View>
-            <View style={{flex: 2}}>
+              <LinearGradient
+                colors={["transparent", "#ffffff"]}
+                style={{ flex: 1, width: "100%" }}
+                start={{ x: 1, y: 0.3 }}
+                end={{ x: 1, y: 0.65 }}
+              ></LinearGradient>
+            </Image>
+          </View>
+          <View style={{ flex: 2 }}>
             <View style={stylesFindBugs.textview}>
               <MyAppBodyText props="Find and save your favorite bugs or species. (Eg. scarabaeidae, Cetonia aurata)"></MyAppBodyText>
             </View>
-            <View style={{ flex:1, justifyContent: "flex-start" }}>
+            <View style={{ flex: 1, justifyContent: "flex-start" }}>
               <Input
                 placeholder="search"
                 leftIcon={{ name: "search", color: "gray", size: 30 }}
@@ -225,14 +225,13 @@ export default function FindBugs() {
                 buttonStyle={stylesFindBugs.btnGetSpecies}
               ></Button>
             </View>
-            </View>
-         
-            <FlatList
-              data={listOfSpecies}
-              renderItem={renderList}
-              keyExtractor={(item, index) => index.toString()}
-            ></FlatList>
-          
+          </View>
+
+          <FlatList
+            data={listOfSpecies}
+            renderItem={renderList}
+            keyExtractor={(item, index) => index.toString()}
+          ></FlatList>
         </SafeAreaView>
       ) : (
         <SafeAreaView
@@ -243,31 +242,31 @@ export default function FindBugs() {
             marginHorizontal: 10,
           }}
         >
-          <View style={{flex:1}}>
-          <View style={{ flex: 3, justifyContent: "center" }}>
-            <Input
-              placeholder="search"
-              leftIcon={{ name: "search", color: "gray", size: 30 }}
-              inputContainerStyle={stylesFindBugs.inputcontainer}
-              value={searchname}
-              onChangeText={(searchname) => setSearchName(searchname)}
-            ></Input>
+          <View style={{ flex: 1 }}>
+            <View style={{ flex: 3, justifyContent: "center" }}>
+              <Input
+                placeholder="search"
+                leftIcon={{ name: "search", color: "gray", size: 30 }}
+                inputContainerStyle={stylesFindBugs.inputcontainer}
+                value={searchname}
+                onChangeText={(searchname) => setSearchName(searchname)}
+              ></Input>
 
-            <View style={stylesFindBugs.viewbtn}>
-              <Button
-                title="clear"
-                onPress={clear}
-                buttonStyle={stylesFindBugs.btnClear}
-              ></Button>
+              <View style={stylesFindBugs.viewbtn}>
+                <Button
+                  title="clear"
+                  onPress={clear}
+                  buttonStyle={stylesFindBugs.btnClear}
+                ></Button>
+              </View>
             </View>
           </View>
-          </View>
-          <View style={{flex:2}}>
-          <FlatList
-            data={listOfSpecies}
-            renderItem={renderList}
-            keyExtractor={(item, index) => index.toString()}
-          ></FlatList>
+          <View style={{ flex: 2 }}>
+            <FlatList
+              data={listOfSpecies}
+              renderItem={renderList}
+              keyExtractor={(item, index) => index.toString()}
+            ></FlatList>
           </View>
         </SafeAreaView>
       )}

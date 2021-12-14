@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Text,
-  View,
-  FlatList,
-  ActivityIndicator,
-} from "react-native";
+import { Text, View, FlatList, ActivityIndicator } from "react-native";
 import { Button, ListItem, Image } from "react-native-elements";
 import { getDatabase, onValue, ref, remove } from "firebase/database";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -21,18 +16,16 @@ export default function Favorites() {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        let modifiedEmail = user.email.replace('@', '');
-        let emailFixed = modifiedEmail.replace('.','');
-        emailFixed= emailFixed.replace('-','');
-        emailFixed= emailFixed.replace('.','');
+        let modifiedEmail = user.email.replace("@", "");
+        let emailFixed = modifiedEmail.replace(".", "");
+        emailFixed = emailFixed.replace("-", "");
+        emailFixed = emailFixed.replace(".", "");
         setUser(emailFixed);
       } else {
         console.log("");
       }
     });
   }, []);
-
-
 
   const showFavorites = () => {
     const itemsRef = ref(database, `favorites/${user}/`);
@@ -48,10 +41,10 @@ export default function Favorites() {
           i = i + 1;
         }
         setFavorites(favorites.concat(array));
-      }else{
-        setFavorites([]); }
-    })
-   
+      } else {
+        setFavorites([]);
+      }
+    });
   };
 
   const deleteFavorite = ({ item, e }) => {
@@ -67,11 +60,10 @@ export default function Favorites() {
         {
           item,
         }
-      )
+      );
     }
     setRefresh(false);
     console.log("deleted");
-    
   };
 
   renderFavorites = ({ item }) => (
@@ -86,7 +78,9 @@ export default function Favorites() {
         <Text>Order: {item.item.order}</Text>
         <Text>Family: {item.item.family}</Text>
         <Text>Parent: {item.item.parent}</Text>
-        <Text style={{fontSize:6, fontStyle:'italic'}}>(c) {item.item.citation}</Text>
+        <Text style={{ fontSize: 6, fontStyle: "italic" }}>
+          (c) {item.item.citation}
+        </Text>
       </ListItem.Content>
       {item.item.image === "no image available" ? (
         <Image
@@ -115,10 +109,10 @@ export default function Favorites() {
     <View>
       {favorites.length === 0 ? (
         <View style={stylesFavorites.buttonview}>
-          <MyAppText props='FAVORITES'/>
+          <MyAppText props="FAVORITES" />
           <Button
             onPress={showFavorites}
-            type='clear'
+            type="clear"
             icon={<Entypo name="heart" size={150} color="#3CB371" />}
           ></Button>
         </View>
@@ -134,5 +128,3 @@ export default function Favorites() {
     </View>
   );
 }
-
-

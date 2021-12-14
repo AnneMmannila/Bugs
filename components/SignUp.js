@@ -14,8 +14,8 @@ export default function SignUp({ navigation }) {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         alert("Account successfully created. You can now login.");
-        setEmail('');
-        setPassword('');
+        setEmail("");
+        setPassword("");
       })
       .catch((error) => alert(error.message));
   };
