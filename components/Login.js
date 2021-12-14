@@ -14,6 +14,7 @@ export default function Login({ navigation }) {
   const [password, setPassword] = useState("");
 
   const changeViewIfAutheticated = () => {
+    try{
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -22,6 +23,9 @@ export default function Login({ navigation }) {
         console.log('')
       }
     });
+  }catch(error){
+  
+    }
   };
 
   const handleLogin = (e) => {
@@ -31,6 +35,8 @@ export default function Login({ navigation }) {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log("Logged in with: ", user.email);
+        setEmail('');
+        setPassword('');
         changeViewIfAutheticated();
       })
       .catch((error) => {

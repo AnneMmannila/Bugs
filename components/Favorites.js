@@ -50,7 +50,8 @@ export default function Favorites() {
         setFavorites(favorites.concat(array));
       }else{
         setFavorites([]); }
-    });
+    })
+   
   };
 
   const deleteFavorite = ({ item, e }) => {
@@ -66,7 +67,7 @@ export default function Favorites() {
         {
           item,
         }
-      );
+      )
     }
     setRefresh(false);
     console.log("deleted");

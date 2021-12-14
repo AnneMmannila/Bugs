@@ -13,8 +13,9 @@ export default function SignUp({ navigation }) {
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
         alert("Account successfully created. You can now login.");
+        setEmail('');
+        setPassword('');
       })
       .catch((error) => alert(error.message));
   };

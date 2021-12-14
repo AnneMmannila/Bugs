@@ -6,12 +6,14 @@ import {
   deleteUser,
   reauthenticateWithCredential,
   updateProfile,
-  updateEmail
+  updateEmail,
+  signOut,
+  EmailAuthProvider
 } from "firebase/auth";
 import { MyAppText } from "./Styles.js";
-import { Input, Button } from "react-native-elements";
+import { Input, Button, Overlay } from "react-native-elements";
 import { logIn, store } from "./LoginRedux";
-import {Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { stylesProfilePage } from "./Styles.js";
 
 export default function ProfilePage() {
@@ -19,35 +21,45 @@ export default function ProfilePage() {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [activeuser, setActiveUser] = useState(null);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
+      try{
       if (user) {
         setActiveUser(user);
         setEmail(user.email);
         setUserName(user.displayName);
       } else {
         store.dispatch(logIn(false));
-      }
+      } 
+    }catch(error){   
+    }
     });
   }, []);
 
   const logOut = (e) => {
     e.preventDefault();
-    setActiveUser(null)
+    setActiveUser(null);
     store.dispatch(logIn(false));
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        console.log("sign out success");
+      })
+      .catch((error) => {
+        // An error happened.
+      });
   };
 
-  //not used
   const reAutheticate = () => {
     const auth = getAuth();
-    const user = auth.currentUser;
-    const credential = promptForCredentials();
-    console.log(credential+"hello")
+    const user= auth.currentUser;
+    const credential = EmailAuthProvider.credential(email, password);
     reauthenticateWithCredential(user, credential)
       .then(() => {
-        console.log("user re-autheticated");
+        removeUser();
       })
       .catch((error) => {
         console.log(error);
@@ -58,7 +70,7 @@ export default function ProfilePage() {
     e.preventDefault();
     const auth = getAuth();
     updateProfile(auth.currentUser, {
-      displayName: username
+      displayName: username,
     })
       .then(() => {
         updateUserEmail();
@@ -80,8 +92,7 @@ export default function ProfilePage() {
       });
   };
 
-  const removeUser = (e) => {
-    e.preventDefault();
+  const removeUser = () => {
     const auth = getAuth();
     const user = auth.currentUser;
     deleteUser(user)
@@ -94,53 +105,80 @@ export default function ProfilePage() {
       });
   };
 
+  const toggleOverlay = () => {
+    setVisible(!visible);
+  };
+
+
   return (
-    <View style= {stylesProfilePage.container}>
+    <View style={stylesProfilePage.container}>
       <View style={{ padding: 10 }}>
         <MyAppText props="Profile"> </MyAppText>
       </View>
-      
-        {activeuser ? (
-          <View style={stylesProfilePage.container}>
-            <Input
-              label='username'
-              value={username}
-              inputContainerStyle={stylesProfilePage.input}
-              onChangeText={(username) => setUserName(username)}
-            ></Input>
-            <Input
-              label='email'
-              inputContainerStyle={stylesProfilePage.input}
-              value={email}
-              onChangeText={(email) => setEmail(email)}
-            ></Input>
-            <View style={stylesProfilePage.btnView}>
+
+      {activeuser ? (
+        <View style={stylesProfilePage.container}>
+          <Input
+            label="username"
+            value={username}
+            inputContainerStyle={stylesProfilePage.input}
+            onChangeText={(username) => setUserName(username)}
+          ></Input>
+          <Input
+            label="email"
+            inputContainerStyle={stylesProfilePage.input}
+            value={email}
+            onChangeText={(email) => setEmail(email)}
+          ></Input>
+          <View style={stylesProfilePage.btnView}>
             <Button
               title="Update"
               onPress={(e) => updateUserInformation(e)}
               buttonStyle={stylesProfilePage.btnupdate}
             ></Button>
-              <Button
-                title="Remove user"
-                onPress={(e) => removeUser(e)}
-                buttonStyle={stylesProfilePage.btnremove}
-              ></Button>
+            <Button
+              title="Remove user"
+              onPress={toggleOverlay}
+              buttonStyle={stylesProfilePage.btnremove}
+            ></Button>
+            <Overlay
+              isVisible={visible}
+              onBackdropPress={toggleOverlay}
+              style={{
+                alignItems: "center",
+              }}
+            >
+              <Input
+                label="email"
+                inputContainerStyle={stylesProfilePage.input}
+                value={email}
+                onChangeText={(email) => setEmail(email)}
+              ></Input>
+              <Input
+                label="password"
+                inputContainerStyle={stylesProfilePage.input}
+                value={password}
+                secureTextEntry = {true}
+                onChangeText={(password) => setPassword(password)}
+              ></Input>
+              <View style={stylesProfilePage.btnView}>
+              <Button title='Delete' onPress={reAutheticate}> </Button>
+              <Button title='Cancel' onPress={toggleOverlay}> </Button>
               </View>
-            <View style={stylesProfilePage.buttonplacement}>
-              <Button
-                type="outline"
-                icon={<Ionicons name='log-out-outline' size={40}></Ionicons>}
-                buttonStyle={stylesProfilePage.styleForButton}
-                onPress={(e) => logOut(e)}
-              ></Button>
-            </View>
+            </Overlay>
           </View>
-        ) : (
-          <Text>No user found</Text>
-        )}
-     
+          <View style={stylesProfilePage.buttonplacement}>
+            <Button
+              type="outline"
+              icon={<Ionicons name="log-out-outline" size={40}></Ionicons>}
+              buttonStyle={stylesProfilePage.styleForButton}
+              onPress={(e) => logOut(e)}
+            ></Button>
+          </View>
+        </View>
+      ) : (
+        <Text>No user found</Text>
+      )}
     </View>
   );
 }
-
-

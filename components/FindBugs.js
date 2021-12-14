@@ -89,15 +89,17 @@ export default function FindBugs() {
   };
 
   useEffect(() => {
+    try{
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const uid = user.uid;
         setUser(user);
       } else {
-        console.log("no user found O_o");
+        console.log("");
       }
-    });
+    })
+  }catch(error) {}
   }, []);
 
   const clear = () => {
@@ -123,11 +125,13 @@ export default function FindBugs() {
       const idetifyOwnObjects = modyfyEmailForDatabase();
       push(ref(db, `favorites/${idetifyOwnObjects}`), {
         item,
-      });
+      })
     }
     console.log("added");
     controller.abort();
+    setSpecies([]);
     setListOfSpecies([]);
+    setSearchName("");
   };
 
   renderList = ({ item }) => (
@@ -200,7 +204,7 @@ export default function FindBugs() {
                 ></LinearGradient>
               </Image>
             </View>
-            <View style={{flex: 1}}>
+            <View style={{flex: 2}}>
             <View style={stylesFindBugs.textview}>
               <MyAppBodyText props="Find and save your favorite bugs or species. (Eg. scarabaeidae, Cetonia aurata)"></MyAppBodyText>
             </View>
