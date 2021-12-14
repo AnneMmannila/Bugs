@@ -6,12 +6,5 @@ React Native and Expo app
 - [React Native](https://reactnative.dev/)
 
 ## Bugs 
-![Sign up]
 
-
-![Log in]
-![Front Page]
-![Favorites]
-![Find Bugs]
-![Map]
-![Profile Page]
+![bugs_signin](https://user-images.githubusercontent.com/70891200/146007590-62bb7dc1-94c5-4ec2-b50d-6f8e5234410a.jpeg)
