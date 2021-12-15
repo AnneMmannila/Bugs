@@ -16,6 +16,7 @@ export default function FrontPage() {
     setVisible(!visible);
   };
 
+//navigate between video and text
   const navigateOverlay = () => {
     setShowVideo(showVideo ? false : true);
   };

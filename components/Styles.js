@@ -3,6 +3,7 @@ import AppLoading from "expo-app-loading";
 import { Text, View, StyleSheet, StatusBar } from "react-native";
 import { useFonts, Bungee_400Regular } from "@expo-google-fonts/bungee";
 
+//component for titles
 export function MyAppText({ props }) {
   let [fontsLoaded] = useFonts({
     Bungee_400Regular,
@@ -19,6 +20,7 @@ export function MyAppText({ props }) {
   }
 }
 
+//component for bodytext
 export function MyAppBodyText({ props }) {
   let [fontsLoaded] = useFonts({
     Bungee_400Regular,

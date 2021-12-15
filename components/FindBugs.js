@@ -38,6 +38,7 @@ export default function FindBugs() {
 
   const controller = new AbortController();
 
+  //fetch species
   const getSpecies = async () => {
     try {
       let name = searchname.replace(" ", "+");
@@ -49,6 +50,8 @@ export default function FindBugs() {
       let responseToJson = await response.json();
       if (responseToJson.results.length > 0) {
         setSpecies(responseToJson.results);
+
+        //fetch images for current species
         getImage(responseToJson.results[0].key);
       } else {
         Alert.alert("No such species or bugs found :(");
@@ -58,6 +61,7 @@ export default function FindBugs() {
     }
   };
 
+//fetch images for currents species with taxonkey  
   const getImage = async (key) => {
     try {
       let taxonkey = key;
@@ -66,7 +70,9 @@ export default function FindBugs() {
         { signal: controller.signal }
       );
       let responseToJson = await response.json();
+      //if species doesn't have an image
       if (responseToJson.results.length === 0) {
+        //update and format list that is rendered
         let listWithImages = species.map((s) => ({
           ...s,
           image: "no image available",
@@ -75,12 +81,14 @@ export default function FindBugs() {
         }));
         setListOfSpecies(listWithImages.slice(0, 5));
       } else {
+        //update and format list that is rendered
         let listWithImages = species.map((s) => ({
           ...s,
           image: responseToJson.results[0].identifier,
           citation:
             "GBIF Secretariat (2021). GBIF Backbone Taxonomy. Checklist dataset https://doi.org/10.15468/39omei accessed via GBIF.org on 2021-12-09.",
         }));
+        //show only 5 of the fetched results
         setListOfSpecies(listWithImages.slice(0, 5));
       }
     } catch (e) {
@@ -93,7 +101,6 @@ export default function FindBugs() {
       const auth = getAuth();
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          const uid = user.uid;
           setUser(user);
         } else {
           console.log("");
@@ -102,6 +109,7 @@ export default function FindBugs() {
     } catch (error) {}
   }, []);
 
+  //clear lis that is rendered etc.
   const clear = () => {
     controller.abort();
     setSpecies([]);
@@ -109,6 +117,7 @@ export default function FindBugs() {
     setSearchName("");
   };
 
+  //get currrent user email and clean it for database use
   const modyfyEmailForDatabase = () => {
     let modyfiedEmail = user.email.replace("@", "");
     let emailFixed = modyfiedEmail.replace(".", "");

@@ -12,6 +12,8 @@ export default function Favorites() {
   const [user, setUser] = useState(null);
   const [refresh, setRefresh] = useState(true);
 
+
+  //get currrent user email and clean it for database use
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
@@ -27,6 +29,7 @@ export default function Favorites() {
     });
   }, []);
 
+  //get favorites from database to current user
   const showFavorites = () => {
     const itemsRef = ref(database, `favorites/${user}/`);
     onValue(itemsRef, (snapshot) => {

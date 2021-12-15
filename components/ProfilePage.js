@@ -104,6 +104,7 @@ export default function ProfilePage() {
       });
   };
 
+  //overlay for removing user
   const toggleOverlay = () => {
     setVisible(!visible);
   };
